@@ -5,7 +5,9 @@ module.exports = withNativeFederation({
   name: 'shared',
 
   exposes: {
-    './footer': './projects/shared/src/app/app.ts',
+    './footer': './projects/shared/src/app/components/footer/footer.component.ts',
+    './header': './projects/shared/src/app/components/header/header.component.ts',
+    './section': './projects/shared/src/app/components/section/section.component.ts',
   },
 
   shared: {
@@ -17,16 +19,10 @@ module.exports = withNativeFederation({
     'rxjs/fetch',
     'rxjs/testing',
     'rxjs/webSocket',
-    // Add further packages you don't need at runtime
+
   ],
 
-  // Please read our FAQ about sharing libs:
-  // https://shorturl.at/jmzH0
-
   features: {
-    // New feature for more performance and avoiding
-    // issues with node libs. Comment this out to
-    // get the traditional behavior:
     ignoreUnusedDeps: true
   }
   
