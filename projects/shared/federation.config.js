@@ -6,7 +6,7 @@ module.exports = withNativeFederation({
 
   exposes: {
     './footer': './projects/shared/src/app/components/footer/footer.component.ts',
-    './header': './projects/shared/src/app/components/header/header.component.ts',
+    './navbar': './projects/shared/src/app/components/navbar/navbar.component.ts',
     './section': './projects/shared/src/app/components/section/section.component.ts',
   },
 
