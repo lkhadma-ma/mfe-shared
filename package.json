@@ -4,9 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:styles-manifest": "node ./scripts/generate-styles-manifest.js",
+    "build": "ng build && npm run build:styles-manifest",
+    "serve": "npm run build && serve -s dist/shared/browser -l 4202"
   },
   "prettier": {
     "overrides": [

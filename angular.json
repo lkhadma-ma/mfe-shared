@@ -114,7 +114,7 @@
 							"buildTarget": "shared:esbuild:development"
 						}
 					},
-					"defaultConfiguration": "development",
+					"defaultConfiguration": "production",
 					"options": {
 						"port": 4202
 					}
