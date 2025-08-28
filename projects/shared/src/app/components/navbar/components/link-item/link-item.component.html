@@ -1,0 +1,16 @@
+<a [routerLink]="href" class="flex flex-col items-center justify-center">
+  <div class="relative text-2xl text-gray-600 hover:text-gray-900">
+    <!-- Render icon slot -->
+    <ng-container *ngTemplateOutlet="iconTemplate"></ng-container>
+
+    <!-- Badge -->
+    @if (notification || home) {
+      <p
+        class="absolute flex items-center justify-center w-4 h-4 text-sm text-gray-100 bg-red-700 rounded-full -right-1.5 -top-0"
+      >
+      {{ alert }}
+    </p>
+    }
+  </div>
+  <span class="hidden text-xs lg:block">{{ label }}</span>
+</a>
