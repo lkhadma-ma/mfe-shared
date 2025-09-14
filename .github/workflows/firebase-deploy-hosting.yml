@@ -1,4 +1,4 @@
-name: Deploy to Firebase Hosting
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -27,13 +27,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build project with verbose logging
-        run: npm run build
+      - name: Build Angular project with base-href
+        run: npm run build -- --base-href /mfe-shared/
 
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          channelId: live
-          projectId: lkhadma-maroc
+          github_token: ${{ secrets.PAT_GITHUB_TOKEN }}
+          publish_dir: dist/shared/browser
+
