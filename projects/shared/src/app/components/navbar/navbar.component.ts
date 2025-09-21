@@ -7,7 +7,8 @@ import { LinkItemComponent } from "./components/link-item/link-item.component";
   selector: 'app-navbar',
   imports: [
     NgTemplateOutlet,
-    LinkItemComponent
+    LinkItemComponent,
+    RouterLink
 ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
