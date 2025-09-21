@@ -12,7 +12,7 @@
 <ng-template #leftNavItems>
   <div class="flex items-center space-x-2">
     <!-- Logo -->
-    <a href="/">
+    <a routerLink="/">
       <img
         class="w-8 h-8"
         src="logoNoBg.png"
@@ -51,35 +51,35 @@
       </div>
   
       <!-- Home -->
-      <app-link-item label="Home" href="/" [home]="true" alert="">
+      <app-link-item label="Home" href="/feeds" [home]="true" alert="">
         <ng-template #icon>
           <i class="fa-solid fa-house-chimney-crack text-xl"></i>
         </ng-template>
       </app-link-item>
   
       <!-- My Network -->
-      <app-link-item label="My Network" href="/">
+      <app-link-item label="My Network" href="/my-network">
         <ng-template #icon>
           <i class="fa-solid fa-users text-xl"></i>
         </ng-template>
       </app-link-item>
   
       <!-- Job -->
-      <app-link-item label="Job" href="/">
+      <app-link-item label="Job" href="/job">
         <ng-template #icon>
           <i class="fa-solid fa-briefcase text-xl"></i>
         </ng-template>
       </app-link-item>
   
       <!-- Messaging -->
-      <app-link-item label="Messaging" href="/">
+      <app-link-item label="Messaging" href="/chat">
         <ng-template #icon>
           <i class="fa-solid fa-comment-dots text-xl"></i>
         </ng-template>
       </app-link-item>
   
       <!-- Notifications -->
-      <app-link-item label="Notifications" href="/" [notification]="true" alert="1">
+      <app-link-item label="Notifications" href="/Notifications" [notification]="true" alert="1">
         <ng-template #icon>
           <i class="fa-solid fa-bell text-xl"></i>
         </ng-template>
@@ -100,14 +100,14 @@
       <div class="border-r border-gray-200 h-14"></div>
   
       <!-- Work -->
-      <app-link-item label="Work" href="/">
+      <app-link-item label="Work" href="/work">
         <ng-template #icon>
           <i class="fa-solid fa-grip text-xl"></i>
         </ng-template>
       </app-link-item>
   
       <!-- Learning -->
-      <app-link-item label="Learning" href="/">
+      <app-link-item label="Learning" href="/learning">
         <ng-template #icon>
           <i class="fa-solid fa-graduation-cap text-xl"></i>
         </ng-template>
@@ -128,7 +128,7 @@
 
       <!-- Left: avatar + search -->
       <div class="w-full flex items-center space-x-2">
-        <a href="/">
+        <a routerLink="/">
           <img
             class="w-8 h-8"
             src="logoNoBg.png"
@@ -147,7 +147,7 @@
       </div>
 
       <!-- Right: chat -->
-      <a href="/">
+      <a routerLink="/chat">
         
         <i class="fa-solid fa-comment-dots text-gray-500 text-xl"></i>
       </a>
