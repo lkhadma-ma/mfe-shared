@@ -19,12 +19,12 @@ export class AlertService {
     this._alerts.set([...this._alerts(), alert]);
 
     if (timeout > 0) {
-      setTimeout(() => this.close(alert.id), timeout);
+      setTimeout(() => this.hide(alert.id), timeout);
     }
     return alert.id;
   }
 
-  close(id: number) {
+  hide(id: number) {
     this._alerts.set(this._alerts().filter(a => a.id !== id));
   }
 

@@ -24,7 +24,7 @@ import { Alert, AlertService } from './alert.service';
 
       <span class="flex-1">{{ alert.message }}</span>
 
-      <button (click)="alertsService.close(alert.id)" type="button"
+      <button (click)="alertsService.hide(alert.id)" type="button"
               class="flex items-center justify-center transition-all w-8 h-8 rounded-md hover:bg-slate-200 active:bg-slate-200 absolute top-1.5 right-1.5">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
              stroke="currentColor" class="h-5 w-5 text-slate-600" stroke-width="2">
