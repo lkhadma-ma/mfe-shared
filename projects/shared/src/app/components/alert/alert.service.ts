@@ -40,39 +40,40 @@ export class AlertService {
     this.render();
   }
 
-  // --- create root container in DOM ---
+  /** Create the root container in the DOM */
   private createContainer() {
     this.containerEl = document.createElement('div');
-    this.containerEl.style.position = 'fixed';
-    this.containerEl.style.top = '1rem';
-    this.containerEl.style.right = '1rem';
-    this.containerEl.style.width = '300px';
-    this.containerEl.style.zIndex = '9999';
+    Object.assign(this.containerEl.style, {
+      position: 'fixed',
+      top: '1rem',
+      right: '1rem',
+      width: '300px',
+      zIndex: '9999',
+    });
     document.body.appendChild(this.containerEl);
   }
 
-  // --- render alerts safely ---
+  /** Render alerts safely in the DOM */
   private render() {
     if (!this.containerEl) return;
-
-    // Clear existing
     this.containerEl.innerHTML = '';
 
-    // Add alerts
     for (const alert of this._alerts()) {
       const el = document.createElement('div');
-      el.style.marginTop = '0.75rem';
-      el.style.padding = '0.75rem';
-      el.style.borderRadius = '0.375rem';
-      el.style.display = 'flex';
-      el.style.alignItems = 'center';
-      el.style.position = 'relative';
-      el.style.fontSize = '0.875rem';
-      el.style.transition = 'all 0.2s ease';
-      el.style.backgroundColor = this.bgColor(alert.type);
-      el.style.color = this.textColor(alert.type);
+      Object.assign(el.style, {
+        marginTop: '0.75rem',
+        padding: '0.75rem',
+        borderRadius: '0.375rem',
+        display: 'flex',
+        alignItems: 'center',
+        position: 'relative',
+        fontSize: '0.875rem',
+        transition: 'all 0.2s ease',
+        backgroundColor: this.bgColor(alert.type),
+        color: this.textColor(alert.type),
+      });
 
-      // icon
+      // Icon
       if (alert.icon) {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('viewBox', '0 0 24 24');
@@ -88,27 +89,29 @@ export class AlertService {
         el.appendChild(svg);
       }
 
-      // message (escape HTML to prevent XSS)
+      // Message (safe)
       const span = document.createElement('span');
       span.textContent = alert.message;
       span.style.flex = '1';
       el.appendChild(span);
 
-      // close button
+      // Close button
       const btn = document.createElement('button');
       btn.textContent = '×';
-      btn.style.position = 'absolute';
-      btn.style.top = '0.25rem';
-      btn.style.right = '0.25rem';
-      btn.style.width = '1.5rem';
-      btn.style.height = '1.5rem';
-      btn.style.display = 'flex';
-      btn.style.alignItems = 'center';
-      btn.style.justifyContent = 'center';
-      btn.style.border = 'none';
-      btn.style.borderRadius = '0.375rem';
-      btn.style.cursor = 'pointer';
-      btn.style.background = 'rgba(0,0,0,0.05)';
+      Object.assign(btn.style, {
+        position: 'absolute',
+        top: '0.25rem',
+        right: '0.25rem',
+        width: '1.5rem',
+        height: '1.5rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        border: 'none',
+        borderRadius: '0.375rem',
+        cursor: 'pointer',
+        background: 'rgba(0,0,0,0.05)',
+      });
       btn.onclick = () => this.hide(alert.id);
       el.appendChild(btn);
 
@@ -116,7 +119,7 @@ export class AlertService {
     }
   }
 
-  // --- helpers for colors ---
+  /** Helper colors */
   private bgColor(type?: Alert['type']): string {
     switch (type) {
       case 'success': return '#d1fae5';
