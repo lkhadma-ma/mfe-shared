@@ -9,7 +9,7 @@ module.exports = withNativeFederation({
     './navbar': './projects/shared/src/app/components/navbar/navbar.component.ts',
     './section': './projects/shared/src/app/components/section/section.component.ts',
 
-    './AlertContainerComponent': './projects/shared/src/app/components/alert/mfe-alert-container.ts',
+    './AlertContainerComponent': './projects/shared/src/app/components/alert/alert-container.component.ts',
     './AlertService': './projects/shared/src/app/components/alert/alert.service.ts',
   },
 

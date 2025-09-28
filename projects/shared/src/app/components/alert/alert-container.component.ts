@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, style, transition, animate } from '@angular/animations';
-import { Alert, AlertService } from './alert-service.service';
+import { Alert, AlertService } from './alert.service';
 
 @Component({
   selector: 'mfe-shared-alert-container',
