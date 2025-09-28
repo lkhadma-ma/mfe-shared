@@ -16,16 +16,33 @@ export class AlertService {
 
   get alerts() { return this._alerts; }
 
-  show(message: string, type: 'info' | 'success' | 'warning' | 'error' = 'info', timeout = 5000, icon?: string) {
-    const alert: Alert = { id: this.nextId++, message, type, timeout, icon };
+  // default icons
+  private defaultIcons: Record<string, string> = {
+    info: 'M13 16h-1v-4h-1m1-4h.01M12 6v6',
+    success: 'M5 13l4 4L19 7',
+    warning: 'M12 9v4m0 4h.01M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20z',
+    error: 'M6 18L18 6M6 6l12 12'
+  };
+
+  show(
+    message: string,
+    type: 'info' | 'success' | 'warning' | 'error' = 'info',
+    timeout = 5000,
+    icon?: string
+  ) {
+    const alert: Alert = { 
+      id: this.nextId++, 
+      message, 
+      type, 
+      timeout, 
+      icon: icon ?? this.defaultIcons[type] 
+    };
     this._alerts.set([...this._alerts(), alert]);
 
     if (!this.containerEl) this.createContainer();
     this.render();
 
-    if (timeout > 0) {
-      setTimeout(() => this.hide(alert.id), timeout);
-    }
+    if (timeout > 0) setTimeout(() => this.hide(alert.id), timeout);
 
     return alert.id;
   }
@@ -58,52 +75,70 @@ export class AlertService {
     if (!this.containerEl) return;
     this.containerEl.innerHTML = '';
 
+    const viewportWidth = window.innerWidth;
+
     for (const alert of this._alerts()) {
       const el = document.createElement('div');
+
+      // responsive sizing
+      let padding = '0.75rem';
+      let fontSize = '0.875rem';
+      if (viewportWidth < 768) {       // mobile
+        padding = '0.5rem';
+        fontSize = '0.75rem';
+      } else if (viewportWidth < 1024) { // tablet
+        padding = '0.65rem';
+        fontSize = '0.8125rem';
+      }
+
       Object.assign(el.style, {
         marginTop: '0.75rem',
-        padding: '0.75rem',
+        padding,
         borderRadius: '0.375rem',
         display: 'flex',
         alignItems: 'center',
         position: 'relative',
-        fontSize: '0.875rem',
+        fontSize,
         transition: 'all 0.2s ease',
         backgroundColor: this.bgColor(alert.type),
         color: this.textColor(alert.type),
       });
 
-      // Icon
+      // icon
       if (alert.icon) {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('viewBox', '0 0 24 24');
         svg.setAttribute('fill', 'none');
         svg.setAttribute('stroke', 'currentColor');
         svg.setAttribute('stroke-width', '2');
-        svg.setAttribute('class', 'w-5 h-5 mr-2');
+        svg.setAttribute('width', fontSize);
+        svg.setAttribute('height', fontSize);
+        svg.style.marginRight = '0.5rem';
+
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', alert.icon);
         path.setAttribute('stroke-linecap', 'round');
         path.setAttribute('stroke-linejoin', 'round');
+
         svg.appendChild(path);
         el.appendChild(svg);
       }
 
-      // Message (safe)
+      // message (safe)
       const span = document.createElement('span');
       span.textContent = alert.message;
       span.style.flex = '1';
       el.appendChild(span);
 
-      // Close button
+      // close button
       const btn = document.createElement('button');
       btn.textContent = '×';
       Object.assign(btn.style, {
         position: 'absolute',
         top: '0.25rem',
         right: '0.25rem',
-        width: '1.5rem',
-        height: '1.5rem',
+        width: fontSize,
+        height: fontSize,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -111,6 +146,7 @@ export class AlertService {
         borderRadius: '0.375rem',
         cursor: 'pointer',
         background: 'rgba(0,0,0,0.05)',
+        fontSize
       });
       btn.onclick = () => this.hide(alert.id);
       el.appendChild(btn);
