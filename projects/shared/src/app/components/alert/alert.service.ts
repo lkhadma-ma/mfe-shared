@@ -1,6 +1,4 @@
-import { Injectable, ApplicationRef, ComponentRef, createComponent, inject, signal, WritableSignal, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { trigger, style, transition, animate } from '@angular/animations';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 
 export interface Alert {
   id: number;
@@ -12,23 +10,18 @@ export interface Alert {
 
 @Injectable({ providedIn: 'root' })
 export class AlertService {
-
   private _alerts: WritableSignal<Alert[]> = signal([]);
   private nextId = 1;
-  private containerRef?: ComponentRef<any>;
+  private containerEl?: HTMLElement;
 
-  // --- reactive alerts ---
   get alerts() { return this._alerts; }
-
-  constructor(private appRef: ApplicationRef) {}
 
   show(message: string, type: 'info' | 'success' | 'warning' | 'error' = 'info', timeout = 5000, icon?: string) {
     const alert: Alert = { id: this.nextId++, message, type, timeout, icon };
     this._alerts.set([...this._alerts(), alert]);
 
-    if (!this.containerRef) {
-      this.mountContainer();
-    }
+    if (!this.containerEl) this.createContainer();
+    this.render();
 
     if (timeout > 0) {
       setTimeout(() => this.hide(alert.id), timeout);
@@ -39,89 +32,106 @@ export class AlertService {
 
   hide(id: number) {
     this._alerts.set(this._alerts().filter(a => a.id !== id));
+    this.render();
   }
 
   clear() {
     this._alerts.set([]);
+    this.render();
   }
 
-  // --- mount the container dynamically ---
-  private mountContainer() {
-    const container = createComponent(AlertContainerComponent, {
-      environmentInjector: inject(ApplicationRef).injector
-    });
-
-    container.instance.alertService = this;
-    this.appRef.attachView(container.hostView);
-
-    const domElem = (container.hostView as any).rootNodes[0] as HTMLElement;
-    document.body.appendChild(domElem);
-
-    this.containerRef = container;
+  // --- create root container in DOM ---
+  private createContainer() {
+    this.containerEl = document.createElement('div');
+    this.containerEl.style.position = 'fixed';
+    this.containerEl.style.top = '1rem';
+    this.containerEl.style.right = '1rem';
+    this.containerEl.style.width = '300px';
+    this.containerEl.style.zIndex = '9999';
+    document.body.appendChild(this.containerEl);
   }
-}
 
-// --- internal alert container component ---
-@Component({
-  selector: 'mfe-alert-container',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
-    <div *ngFor="let alert of alertService.alerts()"
-         @fade
-         role="alert"
-         class="mt-3 relative flex w-full p-3 text-sm rounded-md"
-         [ngClass]="bgClass(alert.type) + ' ' + textClass(alert.type)">
-      
-      <ng-container *ngIf="alert.icon">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-             stroke-width="2" stroke="currentColor" class="h-5 w-5 mr-2">
-          <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="alert.icon"></path>
-        </svg>
-      </ng-container>
+  // --- render alerts safely ---
+  private render() {
+    if (!this.containerEl) return;
 
-      <span class="flex-1">{{ alert.message }}</span>
+    // Clear existing
+    this.containerEl.innerHTML = '';
 
-      <button (click)="alertService.hide(alert.id)" type="button"
-              class="flex items-center justify-center transition-all w-8 h-8 rounded-md hover:bg-slate-200 active:bg-slate-200 absolute top-1.5 right-1.5">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-             stroke="currentColor" class="h-5 w-5 text-slate-600" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
-      </button>
-    </div>
-  `,
-  animations: [
-    trigger('fade', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(-10px)' }),
-        animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
-      ]),
-      transition(':leave', [
-        animate('200ms ease-in', style({ opacity: 0, transform: 'translateY(-10px)' }))
-      ])
-    ])
-  ],
-  host: { class: 'block w-full fixed top-4 right-4 z-50' }
-})
-class AlertContainerComponent {
-  alertService!: AlertService;
+    // Add alerts
+    for (const alert of this._alerts()) {
+      const el = document.createElement('div');
+      el.style.marginTop = '0.75rem';
+      el.style.padding = '0.75rem';
+      el.style.borderRadius = '0.375rem';
+      el.style.display = 'flex';
+      el.style.alignItems = 'center';
+      el.style.position = 'relative';
+      el.style.fontSize = '0.875rem';
+      el.style.transition = 'all 0.2s ease';
+      el.style.backgroundColor = this.bgColor(alert.type);
+      el.style.color = this.textColor(alert.type);
 
-  bgClass(type: Alert['type']) {
-    switch (type) {
-      case 'success': return 'bg-green-100';
-      case 'warning': return 'bg-yellow-100';
-      case 'error': return 'bg-red-100';
-      default: return 'bg-slate-100';
+      // icon
+      if (alert.icon) {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+        svg.setAttribute('stroke-width', '2');
+        svg.setAttribute('class', 'w-5 h-5 mr-2');
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', alert.icon);
+        path.setAttribute('stroke-linecap', 'round');
+        path.setAttribute('stroke-linejoin', 'round');
+        svg.appendChild(path);
+        el.appendChild(svg);
+      }
+
+      // message (escape HTML to prevent XSS)
+      const span = document.createElement('span');
+      span.textContent = alert.message;
+      span.style.flex = '1';
+      el.appendChild(span);
+
+      // close button
+      const btn = document.createElement('button');
+      btn.textContent = '×';
+      btn.style.position = 'absolute';
+      btn.style.top = '0.25rem';
+      btn.style.right = '0.25rem';
+      btn.style.width = '1.5rem';
+      btn.style.height = '1.5rem';
+      btn.style.display = 'flex';
+      btn.style.alignItems = 'center';
+      btn.style.justifyContent = 'center';
+      btn.style.border = 'none';
+      btn.style.borderRadius = '0.375rem';
+      btn.style.cursor = 'pointer';
+      btn.style.background = 'rgba(0,0,0,0.05)';
+      btn.onclick = () => this.hide(alert.id);
+      el.appendChild(btn);
+
+      this.containerEl.appendChild(el);
     }
   }
 
-  textClass(type: Alert['type']) {
+  // --- helpers for colors ---
+  private bgColor(type?: Alert['type']): string {
     switch (type) {
-      case 'success': return 'text-green-600';
-      case 'warning': return 'text-yellow-600';
-      case 'error': return 'text-red-600';
-      default: return 'text-slate-600';
+      case 'success': return '#d1fae5';
+      case 'warning': return '#fef3c7';
+      case 'error': return '#fee2e2';
+      default: return '#f3f4f6';
+    }
+  }
+
+  private textColor(type?: Alert['type']): string {
+    switch (type) {
+      case 'success': return '#065f46';
+      case 'warning': return '#78350f';
+      case 'error': return '#991b1b';
+      default: return '#374151';
     }
   }
 }
