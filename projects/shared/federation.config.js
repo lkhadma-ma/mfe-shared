@@ -8,6 +8,9 @@ module.exports = withNativeFederation({
     './footer': './projects/shared/src/app/components/footer/footer.component.ts',
     './navbar': './projects/shared/src/app/components/navbar/navbar.component.ts',
     './section': './projects/shared/src/app/components/section/section.component.ts',
+
+    './AlertContainerComponent': './projects/shared/src/app/components/alert/mfe-alert-container.ts',
+    './AlertService': './projects/shared/src/app/components/alert/alert.service.ts',
   },
 
   shared: {
