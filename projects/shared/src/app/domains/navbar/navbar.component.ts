@@ -1,7 +1,8 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LinkItemComponent } from "./components/link-item/link-item.component";
+import { AuthHttpService } from '@shared/auth/auth-http.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +16,7 @@ import { LinkItemComponent } from "./components/link-item/link-item.component";
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  authHttpService = inject(AuthHttpService);
 
   ngOnInit() {
   }
