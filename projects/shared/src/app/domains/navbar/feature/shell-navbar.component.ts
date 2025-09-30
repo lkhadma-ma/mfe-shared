@@ -95,7 +95,7 @@ import { UserShortView } from '../data-access/user';
 
           <!-- Avatar -->
           <a
-            [routerLink]="['/profile', user()?.username]"
+            [routerLink]="['/lk', user()?.username]"
             class="flex flex-col items-center justify-center"
           >
             <img
