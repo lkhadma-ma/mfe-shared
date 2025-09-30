@@ -34,7 +34,7 @@ import { Component, OnInit } from '@angular/core';
   
   `
 })
-export class FooterComponent implements OnInit {
+export class ShellFooterComponent implements OnInit {
 
   constructor() { }
 
