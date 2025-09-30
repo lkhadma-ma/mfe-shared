@@ -5,10 +5,9 @@ module.exports = withNativeFederation({
   name: 'shared',
 
   exposes: {
-    './footer': './projects/shared/src/app/domains/footer/footer.component.ts',
-    './navbar': './projects/shared/src/app/domains/navbar/navbar.component.ts',
-    './section': './projects/shared/src/app/domains/section/section.component.ts',
-    './AlertService': './projects/shared/src/app/domains/alert/alert.service.ts',
+    './ShellFooterComponent': './projects/shared/src/app/domains/footer/feature/shell-footer.component.ts',
+    './ShellNavbarComponent': './projects/shared/src/app/domains/navbar/feature/shell-navbar.component.ts',
+    './AlertService': './projects/shared/src/app/domains/alert/feature/alert.service.ts',
   },
 
   shared: {
