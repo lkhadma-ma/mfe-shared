@@ -3,7 +3,7 @@
   "shared": [
     {
       "packageName": "@angular/common",
-      "outFileName": "_angular_common.YxheEIfxpw.js",
+      "outFileName": "_angular_common.LLBhqRlsCA.js",
       "requiredVersion": "20.1.3",
       "singleton": true,
       "strictVersion": true,
@@ -11,7 +11,7 @@
     },
     {
       "packageName": "@angular/common/http",
-      "outFileName": "_angular_common_http._OaX3U7Pxa.js",
+      "outFileName": "_angular_common_http.mCLIQKkODT.js",
       "requiredVersion": "20.1.3",
       "singleton": true,
       "strictVersion": true,
@@ -19,7 +19,7 @@
     },
     {
       "packageName": "@angular/core",
-      "outFileName": "_angular_core.vS0q20viwl.js",
+      "outFileName": "_angular_core.fIJAFCZ3qm.js",
       "requiredVersion": "20.1.3",
       "singleton": true,
       "strictVersion": true,
@@ -27,7 +27,7 @@
     },
     {
       "packageName": "@angular/core/primitives/di",
-      "outFileName": "_angular_core_primitives_di._bpw_Tve90.js",
+      "outFileName": "_angular_core_primitives_di.Div-rTgTrA.js",
       "requiredVersion": "20.1.3",
       "singleton": true,
       "strictVersion": true,
@@ -35,7 +35,7 @@
     },
     {
       "packageName": "@angular/core/primitives/signals",
-      "outFileName": "_angular_core_primitives_signals.dgTQA0FZBB.js",
+      "outFileName": "_angular_core_primitives_signals.KXrA9rCop3.js",
       "requiredVersion": "20.1.3",
       "singleton": true,
       "strictVersion": true,
@@ -43,7 +43,7 @@
     },
     {
       "packageName": "@angular/platform-browser",
-      "outFileName": "_angular_platform_browser.njff6UnSg8.js",
+      "outFileName": "_angular_platform_browser.4KBJMAr3I3.js",
       "requiredVersion": "20.1.3",
       "singleton": true,
       "strictVersion": true,
@@ -51,7 +51,7 @@
     },
     {
       "packageName": "@angular/router",
-      "outFileName": "_angular_router.tLTLSqIVL3.js",
+      "outFileName": "_angular_router.akGLiAt8YZ.js",
       "requiredVersion": "20.1.3",
       "singleton": true,
       "strictVersion": true,
@@ -59,7 +59,7 @@
     },
     {
       "packageName": "rxjs",
-      "outFileName": "rxjs.zTFWjHXSF2.js",
+      "outFileName": "rxjs.pYfrw_mIIN.js",
       "requiredVersion": "~7.8.0",
       "singleton": true,
       "strictVersion": true,
@@ -67,7 +67,7 @@
     },
     {
       "packageName": "rxjs/operators",
-      "outFileName": "rxjs_operators.NRSemiSO4I.js",
+      "outFileName": "rxjs_operators.Rm-caQGwKN.js",
       "requiredVersion": "~7.8.0",
       "singleton": true,
       "strictVersion": true,
@@ -75,7 +75,7 @@
     },
     {
       "packageName": "tslib",
-      "outFileName": "tslib.aZtl2hDYUa.js",
+      "outFileName": "tslib.iIWI72WJL7.js",
       "requiredVersion": "^2.3.0",
       "singleton": true,
       "strictVersion": true,
@@ -130,6 +130,10 @@
     {
       "key": "./ShellNavbarComponent",
       "outFileName": "ShellNavbarComponent-7SNORFJA.js"
+    },
+    {
+      "key": "./ShellNotFoundComponent",
+      "outFileName": "ShellNotFoundComponent-PKKP2Z66.js"
     },
     {
       "key": "./AlertService",
