@@ -54,7 +54,7 @@ import { UserShortView } from '../data-access/user';
           </div>
 
           <!-- Home -->
-          <app-link-item label="feeds" href="/lk/feeds" [home]="true" alert="">
+          <app-link-item label="feeds" href="/lk/feed" [home]="true" alert="">
             <ng-template #icon>
               <i class="fa-solid fa-house-chimney-crack text-xl"></i>
             </ng-template>
