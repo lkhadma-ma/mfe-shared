@@ -14,7 +14,7 @@ import { AccountType } from '../data-access/account.type';
         <div>
           <p class="text-xl font-semibold flex justify-between items-center">
             <span>Switch Account</span>
-            <mfe-shared-switch></mfe-shared-switch>
+            <mfe-shared-switch (click)="switchAccoutType()"></mfe-shared-switch>
           </p>
           <p class="text-gray-500">{{switchToAccountType}}</p>
         </div>
