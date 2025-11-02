@@ -10,24 +10,29 @@ import { Component, OnInit } from '@angular/core';
       <span class="text-xs">Home</span>
     </a>
 
-    <a routerLink="/" class="flex flex-col items-center justify-center">
+    <!-- <a routerLink="/" class="flex flex-col items-center justify-center">
       <i class="fa-solid fa-users text-xl"></i>
       <span class="text-xs">My Network</span>
-    </a>
+    </a> -->
 
-    <a routerLink="/" class="flex flex-col items-center justify-center">
+    <!-- <a routerLink="/" class="flex flex-col items-center justify-center">
       <i class="fa-solid fa-square-plus text-xl"></i>
       <span class="text-xs">Post</span>
-    </a>
-
-    <a routerLink="/" class="flex flex-col items-center justify-center">
-      <i class="fa-solid fa-bell text-xl"></i>
-      <span class="text-xs">Notifications</span>
-    </a>
+    </a> -->
 
     <a routerLink="/" class="flex flex-col items-center justify-center">
       <i class="fa-solid fa-briefcase text-xl"></i>
       <span class="text-xs">Jobs</span>
+    </a>
+
+    <!-- <a routerLink="/" class="flex flex-col items-center justify-center">
+      <i class="fa-solid fa-bell text-xl"></i>
+      <span class="text-xs">Notifications</span>
+    </a> -->
+
+    <a routerLink="/" class="flex flex-col items-center justify-center">
+      <i class="fa-solid fa-user text-xl"></i>
+      <span class="text-xs">Profile</span>
     </a>
   </div>
 </div>

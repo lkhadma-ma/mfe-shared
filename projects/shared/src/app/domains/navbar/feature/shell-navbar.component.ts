@@ -61,11 +61,11 @@ import { UserShortView } from '../data-access/user';
           </app-link-item>
 
           <!-- My Network -->
-          <app-link-item label="My Network" href="/my-network">
+          <!-- <app-link-item label="My Network" href="/my-network">
             <ng-template #icon>
               <i class="fa-solid fa-users text-xl"></i>
             </ng-template>
-          </app-link-item>
+          </app-link-item> -->
 
           <!-- Job -->
           <app-link-item label="Job" href="/job">
@@ -75,23 +75,22 @@ import { UserShortView } from '../data-access/user';
           </app-link-item>
 
           <!-- Messaging -->
-          <app-link-item label="Messaging" href="/chat">
+          <!-- <app-link-item label="Messaging" href="/chat">
             <ng-template #icon>
               <i class="fa-solid fa-comment-dots text-xl"></i>
             </ng-template>
-          </app-link-item>
+          </app-link-item> -->
 
           <!-- Notifications -->
-          <app-link-item
+          <!-- <app-link-item
             label="Notifications"
             href="/Notifications"
             [notification]="true"
-            alert="1"
-          >
+            alert="1">
             <ng-template #icon>
               <i class="fa-solid fa-bell text-xl"></i>
             </ng-template>
-          </app-link-item>
+          </app-link-item> -->
 
           <!-- Avatar -->
           <a
@@ -154,9 +153,9 @@ import { UserShortView } from '../data-access/user';
           </div>
 
           <!-- Right: chat -->
-          <a routerLink="/chat">
+          <!-- <a routerLink="/chat">
             <i class="fa-solid fa-comment-dots text-gray-500 text-xl"></i>
-          </a>
+          </a> -->
         </div>
       </div>
 
