@@ -8,6 +8,7 @@ module.exports = withNativeFederation({
     './ShellFooterComponent': './projects/shared/src/app/domains/footer/feature/shell-footer.component.ts',
     './ShellNavbarComponent': './projects/shared/src/app/domains/navbar/feature/shell-navbar.component.ts',
     './ShellNotFoundComponent': './projects/shared/src/app/domains/not-found/feature/shell-not-found.component.ts',
+    './ShellSwitchAccountComponent': './projects/shared/src/app/domains/switch-account/feature/shell-switch-account.component.ts',
     './AlertService': './projects/shared/src/app/domains/alert/feature/alert.service.ts',
   },
 
