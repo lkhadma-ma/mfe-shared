@@ -173,7 +173,17 @@ export class ShellNavbarComponent implements OnInit {
    */
   onInput(event: Event) {
     const value = (event.target as HTMLInputElement).value;
-    window.dispatchEvent(new CustomEvent('mfe-search:domains:all', { detail: value }));
+
+      const div = document.createElement('div');
+      div.textContent = value;
+      let safe = div.innerHTML;
+      safe = safe.replace(/["'<>`]/g, '');
+
+    window.dispatchEvent(
+      new CustomEvent('mfe-search:domains:all', { 
+        detail: safe.trim()
+      })
+      );
   }
   
 }
