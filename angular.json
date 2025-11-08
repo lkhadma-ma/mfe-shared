@@ -18,20 +18,19 @@
 					"builder": "@angular-architects/native-federation:build",
 					"options": {},
 					"configurations": {
-						"production": {
-							"target": "shared:esbuild:production"
+						"prod": {
+							"target": "shared:esbuild-prod:prod"
 						},
-						"development": {
-							"target": "shared:esbuild:development",
-							"dev": true
+						"dev": {
+							"target": "shared:esbuild-dev:dev"
 						}
 					},
-					"defaultConfiguration": "production"
+					"defaultConfiguration": "dev"
 				},
 				"serve": {
 					"builder": "@angular-architects/native-federation:build",
 					"options": {
-						"target": "shared:serve-original:development",
+						"target": "shared:serve-original:dev",
 						"rebuildDelay": 0,
 						"dev": true,
 						"port": 0
@@ -52,7 +51,8 @@
 						"assets": [
 							{
 								"glob": "**/*",
-								"input": "projects/shared/public"
+								"input": "projects/shared/public",
+								"output": "/assets"
 							}
 						],
 						"styles": [
@@ -60,7 +60,7 @@
 						]
 					}
 				},
-				"esbuild": {
+				"esbuild-dev": {
 					"builder": "@angular/build:application",
 					"options": {
 						"browser": "projects/shared/src/main.ts",
@@ -73,7 +73,8 @@
 						"assets": [
 							{
 								"glob": "**/*",
-								"input": "projects/shared/public"
+								"input": "projects/shared/public",
+								"output": "/assets"
 							}
 						],
 						"styles": [
@@ -81,7 +82,30 @@
 						]
 					},
 					"configurations": {
-						"production": {
+						"dev": {
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true
+						}
+					},
+					"defaultConfiguration": "dev"
+				},			  
+				"esbuild-prod": {
+					"builder": "@angular/build:application",
+					"options": {
+						"browser": "projects/shared/src/main.ts",
+						"polyfills": [
+							"zone.js",
+							"es-module-shims"
+						],
+						"tsConfig": "projects/shared/tsconfig.app.json",
+						"inlineStyleLanguage": "scss",
+						"styles": [
+							"projects/shared/src/styles.scss"
+						]
+					},
+					"configurations": {
+						"prod": {
 							"budgets": [
 								{
 									"type": "initial",
@@ -95,26 +119,21 @@
 								}
 							],
 							"outputHashing": "all"
-						},
-						"development": {
-							"optimization": false,
-							"extractLicenses": false,
-							"sourceMap": true
 						}
 					},
-					"defaultConfiguration": "production"
+					"defaultConfiguration": "prod"
 				},
 				"serve-original": {
 					"builder": "@angular/build:dev-server",
 					"configurations": {
-						"production": {
-							"buildTarget": "shared:esbuild:production"
+						"prod": {
+							"buildTarget": "shared:esbuild-prod:prod"
 						},
-						"development": {
-							"buildTarget": "shared:esbuild:development"
+						"dev": {
+							"buildTarget": "shared:esbuild-dev:dev"
 						}
 					},
-					"defaultConfiguration": "production",
+					"defaultConfiguration": "dev",
 					"options": {
 						"port": 4202
 					}
