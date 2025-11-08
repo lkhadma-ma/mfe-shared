@@ -1,8 +1,8 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { LinkItemComponent } from '../ui/link-item/link-item.component';
-import { UserService } from '../data-access/user.service';
+import { UserService } from '../data-access/user.store';
 import { UserShortView } from '../data-access/user';
 
 @Component({
@@ -26,13 +26,14 @@ import { UserShortView } from '../data-access/user';
         </a>
 
         <!-- Search (visible only on lg and up) -->
-        <div class="hidden lg:block">
+        <div class="hidden md:block">
           <div
             class="flex items-center xl:w-80 w-60 space-x-3 py-1.5 px-3 rounded bg-[#EEF3F7]"
           >
             <i class="fa-solid fa-search text-gray-500 text-sm"></i>
             <input
               (focus)="goToSearchRoute()"
+              (input)="onInput($event)"
               type="text"
               placeholder="Search"
               class="bg-[#EEF3F7] w-full focus:outline-none text-sm"
@@ -45,15 +46,6 @@ import { UserShortView } from '../data-access/user';
     <ng-template #rightNavItems>
       <div>
         <div class="flex items-center space-x-8 text-gray-500">
-          <!-- Search (only mobile) -->
-          <div class="ml-6 lg:hidden">
-            <app-link-item label="Search" (click)="goToSearchRoute()">
-              <ng-template #icon>
-                <i class="fa-solid fa-search text-xl"></i>
-              </ng-template>
-            </app-link-item>
-          </div>
-
           <!-- Home -->
           <app-link-item label="feeds" href="/lk/feed" [home]="true" alert="">
             <ng-template #icon>
@@ -143,6 +135,7 @@ import { UserShortView } from '../data-access/user';
               <i class="fa-solid fa-search text-gray-500 text-sm"></i>
               <input
                 (focus)="goToSearchRoute()"
+                (input)="onInput($event)"
                 type="text"
                 placeholder="Search"
                 class="w-full bg-[#EEF3F7] focus:outline-none ml-2"
@@ -174,4 +167,13 @@ export class ShellNavbarComponent implements OnInit {
   goToSearchRoute() {
     this.router.navigate(['/lk/search']);
   }
+
+  /**
+   * this parte has dependency outside of microfrontend with "mfe-search"
+   */
+  onInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    window.dispatchEvent(new CustomEvent('mfe-search:domains:all', { detail: value }));
+  }
+  
 }
