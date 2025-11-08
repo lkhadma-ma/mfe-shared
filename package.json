@@ -3,12 +3,14 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "build:dev": "ng build --configuration dev --base-href /mfe-shared/ && npm run build:styles-manifest",
+    "build:prod": "ng build --configuration prod --base-href /mfe-shared/ && npm run build:styles-manifest",
+    "build:cdn": "mkdir -p dist/shared/browser/assets && cp -R projects/shared/public/* dist/shared/browser/assets",
+
     "build:styles-manifest": "node ./scripts/generate-styles-manifest.js",
-    "build": "ng build && npm run build:styles-manifest",
-    "serve": "npm run build && serve -s dist/shared/browser -l 4202"
+    "watch:styles-manifest": "chokidar \"dist/shared/browser/styles*.css\" -c \"node ./scripts/generate-styles-manifest.js\"",
+    "watch": "concurrently \"ng build shared --watch\" \"npm run watch:styles-manifest\"",
+    "serve": "concurrently \"npm run watch\" \"browser-sync start --server dist/shared/browser --files dist/shared/browser --port 4202 --no-open\""
   },
   "prettier": {
     "overrides": [
@@ -52,6 +54,10 @@
     "karma-jasmine-html-reporter": "2.1.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
-    "typescript": "~5.8.2"
+    "typescript": "~5.8.2",
+
+    "browser-sync": "^3.0.4",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^9.2.1"
   }
 }

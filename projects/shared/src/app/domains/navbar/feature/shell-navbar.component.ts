@@ -1,20 +1,22 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LinkItemComponent } from '../ui/link-item/link-item.component';
 import { UserService } from '../data-access/user.service';
 import { UserShortView } from '../data-access/user';
+import { SearchComponent } from './search/feature/shell-search.component';
 
 @Component({
   selector: 'app-navbar',
-  imports: [NgTemplateOutlet, LinkItemComponent, RouterLink],
+  imports: [NgTemplateOutlet, LinkItemComponent, RouterLink, SearchComponent],
   template: `
     @if (user()) {
-      <main class="fixed w-full top-0 z-20 hidden px-8 shadow bg-white md:block">
+    <main class="fixed w-full top-0 z-20 hidden px-8 shadow bg-white md:block">
       <div class="flex items-center max-w-6xl mx-auto md:justify-between">
         <ng-container *ngTemplateOutlet="leftNavItems"></ng-container>
         <ng-container *ngTemplateOutlet="rightNavItems"></ng-container>
       </div>
+      <mfe-company-navbar-search />
     </main>
     }
 
@@ -32,6 +34,7 @@ import { UserShortView } from '../data-access/user';
           >
             <i class="fa-solid fa-search text-gray-500 text-sm"></i>
             <input
+              (focus)="search.open()"
               type="text"
               placeholder="Search"
               class="bg-[#EEF3F7] w-full focus:outline-none text-sm"
@@ -97,11 +100,7 @@ import { UserShortView } from '../data-access/user';
             [routerLink]="['/lk', user()?.username]"
             class="flex flex-col items-center justify-center"
           >
-            <img
-              class="rounded-full w-7 h-7"
-              [src]="user()?.avatar"
-              alt="Me"
-            />
+            <img class="rounded-full w-7 h-7" [src]="user()?.avatar" alt="Me" />
             <div class="hidden lg:block">
               <span class="flex items-center text-xs">
                 Me
@@ -145,6 +144,7 @@ import { UserShortView } from '../data-access/user';
             >
               <i class="fa-solid fa-search text-gray-500 text-sm"></i>
               <input
+                (focus)="search.open()"
                 type="text"
                 placeholder="Search"
                 class="w-full bg-[#EEF3F7] focus:outline-none ml-2"
@@ -158,22 +158,11 @@ import { UserShortView } from '../data-access/user';
           </a> -->
         </div>
       </div>
-
-      <!-- Feed input -->
-      <div class="container px-5 mt-5 hidden">
-        <div class="flex items-center px-4 py-3 shadow bg-white rounded">
-          <i class="fas fa-edit text-gray-600 text-xl mr-3"></i>
-          <input
-            type="text"
-            placeholder="Share your thoughts or photos"
-            class="w-full tracking-wide focus:outline-none"
-          />
-        </div>
-      </div>
     </main>
   `,
 })
 export class ShellNavbarComponent implements OnInit {
+  @ViewChild(SearchComponent) search!: SearchComponent;
   user = signal<UserShortView | null>(null);
   userService = inject(UserService);
 
