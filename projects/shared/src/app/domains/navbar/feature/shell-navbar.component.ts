@@ -19,16 +19,16 @@ import { UserShortView } from '../data-access/user';
     }
 
     <ng-template #leftNavItems>
-      <div class="flex items-center space-x-2">
+      <div class="flex flex-1 items-center space-x-2">
         <!-- Logo -->
         <a routerLink="/home">
           <img class="w-8 h-8" src="logoNoBg.png" alt="Me" />
         </a>
 
         <!-- Search (visible only on lg and up) -->
-        <div class="hidden md:block">
+        <div class="w-full hidden md:block">
           <div
-            class="flex items-center xl:w-80 w-60 space-x-3 py-1.5 px-3 rounded bg-[#EEF3F7]"
+            class="flex transition-all duration-300 items-center xl:w-80 focus-within:w-[90%] w-60 space-x-3 py-1.5 px-3 rounded bg-[#EEF3F7]"
           >
             <i class="fa-solid fa-search text-gray-500 text-sm"></i>
             <input
