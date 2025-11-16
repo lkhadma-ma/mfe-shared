@@ -61,7 +61,7 @@ import { User } from '../data-access/user';
           </app-link-item> -->
 
           <!-- Job -->
-          <app-link-item label="Job" href="/lk/job">
+          <app-link-item label="Jobs" href="/lk/jobs">
             <ng-template #icon>
               <i class="fa-solid fa-briefcase text-xl"></i>
             </ng-template>

@@ -23,7 +23,7 @@ import { RouterLink } from '@angular/router';
       <span class="text-xs">Post</span>
     </a> -->
 
-    <a routerLink="/lk/job" class="flex flex-col items-center justify-center">
+    <a routerLink="/lk/jobs" class="flex flex-col items-center justify-center">
       <i class="fa-solid fa-briefcase text-xl"></i>
       <span class="text-xs">Jobs</span>
     </a>
