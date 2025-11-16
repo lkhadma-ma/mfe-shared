@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { UserStore } from '../data-access/user.store';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
+  imports: [RouterLink],
   template: `
   <div class="md:hidden">
   <div class="fixed bottom-0 flex items-center justify-between w-full px-5 py-2 text-gray-500 bg-white">
@@ -20,7 +23,7 @@ import { Component, OnInit } from '@angular/core';
       <span class="text-xs">Post</span>
     </a> -->
 
-    <a routerLink="/" class="flex flex-col items-center justify-center">
+    <a routerLink="/lk/job" class="flex flex-col items-center justify-center">
       <i class="fa-solid fa-briefcase text-xl"></i>
       <span class="text-xs">Jobs</span>
     </a>
@@ -30,7 +33,7 @@ import { Component, OnInit } from '@angular/core';
       <span class="text-xs">Notifications</span>
     </a> -->
 
-    <a routerLink="/" class="flex flex-col items-center justify-center">
+    <a [routerLink]="['/lk',user()?.username]" class="flex flex-col items-center justify-center">
       <i class="fa-solid fa-user text-xl"></i>
       <span class="text-xs">Profile</span>
     </a>
@@ -41,9 +44,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShellFooterComponent implements OnInit {
 
-  constructor() { }
+  private userStore = inject(UserStore);
+
+  user = this.userStore.user;
 
   ngOnInit() {
+    this.userStore.loadUser();
   }
 
 }

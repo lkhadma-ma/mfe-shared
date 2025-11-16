@@ -2,8 +2,8 @@ import { NgTemplateOutlet } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { LinkItemComponent } from '../ui/link-item/link-item.component';
-import { UserService } from '../data-access/user.store';
-import { UserShortView } from '../data-access/user';
+import { UserStore } from '../data-access/user.store';
+import { User } from '../data-access/user';
 
 @Component({
   selector: 'app-navbar',
@@ -61,7 +61,7 @@ import { UserShortView } from '../data-access/user';
           </app-link-item> -->
 
           <!-- Job -->
-          <app-link-item label="Job" href="/job">
+          <app-link-item label="Job" href="/lk/job">
             <ng-template #icon>
               <i class="fa-solid fa-briefcase text-xl"></i>
             </ng-template>
@@ -103,14 +103,14 @@ import { UserShortView } from '../data-access/user';
           <div class="border-r border-gray-200 h-14"></div>
 
           <!-- Work -->
-          <app-link-item label="Work" href="/work">
+          <app-link-item label="Work" href="/lk/work">
             <ng-template #icon>
               <i class="fa-solid fa-grip text-xl"></i>
             </ng-template>
           </app-link-item>
 
           <!-- Learning -->
-          <app-link-item label="Learning" href="/learning">
+          <app-link-item label="Learning" href="/lk/learning">
             <ng-template #icon>
               <i class="fa-solid fa-graduation-cap text-xl"></i>
             </ng-template>
@@ -155,13 +155,11 @@ import { UserShortView } from '../data-access/user';
 export class ShellNavbarComponent implements OnInit {
 
   private router = inject(Router);
-  user = signal<UserShortView | null>(null);
-  userService = inject(UserService);
-
+  private userStore = inject(UserStore);
+  user = this.userStore.user;
+  
   ngOnInit() {
-    this.userService.loadShortUserView().subscribe((user) => {
-      this.user.set(user);
-    });
+    this.userStore.loadUser();
   }
 
   goToSearchRoute() {
