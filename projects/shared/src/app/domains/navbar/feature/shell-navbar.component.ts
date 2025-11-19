@@ -1,9 +1,11 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop'
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 import { LinkItemComponent } from '../ui/link-item/link-item.component';
 import { UserStore } from '../data-access/user.store';
 import { User } from '../data-access/user';
+import { filter, map } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -28,16 +30,25 @@ import { User } from '../data-access/user';
         <!-- Search (visible only on lg and up) -->
         <div class="w-full hidden md:block">
           <div
-            class="flex transition-all duration-300 items-center xl:w-80 focus-within:w-[90%] w-60 space-x-3 py-1.5 px-3 rounded bg-[#EEF3F7]"
+            class="flex transition-all duration-300 items-center xl:w-80 focus-within:w-[90%] w-60 space-x-3 py-1.5 px-3 rounded-[20px] bg-white border-[0.5px] border-[solid] border-black"
           >
             <i class="fa-solid fa-search text-gray-500 text-sm"></i>
-            <input
-              (focus)="goToSearchRoute()"
-              (input)="onInput($event)"
-              type="text"
-              placeholder="Search"
-              class="bg-[#EEF3F7] w-full focus:outline-none text-sm"
-            />
+            @if(isJobPage()){
+              <input
+                (input)="onInputJob($event)"
+                type="text"
+                placeholder="Search for job"
+                class="w-full focus:outline-none text-sm"
+              />
+            } @else {
+              <input
+                (focus)="goToSearchRoute()"
+                (input)="onInput($event)"
+                type="text"
+                placeholder="Search for compnay or user"
+                class="w-full focus:outline-none text-sm"
+              />
+            }
           </div>
         </div>
       </div>
@@ -153,11 +164,10 @@ import { User } from '../data-access/user';
   `,
 })
 export class ShellNavbarComponent implements OnInit {
-
   private router = inject(Router);
   private userStore = inject(UserStore);
   user = this.userStore.user;
-  
+
   ngOnInit() {
     this.userStore.loadUser();
   }
@@ -166,13 +176,24 @@ export class ShellNavbarComponent implements OnInit {
     this.router.navigate(['/lk/search']);
   }
 
-  /**
-   * this parte has dependency outside of microfrontend with "mfe-search"
-   */
   onInput(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     const safe = value.replace(/<[^>]*>/g, '').trim();
     window.dispatchEvent(new CustomEvent('mfe-search:domains:all', { detail: safe }));
   }
+
+  onInputJob(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    const safe = value.replace(/<[^>]*>/g, '').trim();
+    window.dispatchEvent(new CustomEvent('mfe-search:domains:job', { detail: safe }));
+  }
+
+  currentUrl = toSignal(
+    this.router.events.pipe(
+      filter(e => e instanceof NavigationEnd),
+      map(() => this.router.url)
+    ), { initialValue: this.router.url });
   
+  isJobPage = computed(() => this.currentUrl()?.startsWith('/lk/jobs'));
+
 }
