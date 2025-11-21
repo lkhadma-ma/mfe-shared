@@ -141,17 +141,26 @@ import { filter, map } from 'rxjs';
             </a>
 
             <div
-              class="w-full flex items-center py-1.5 px-3 rounded bg-[#EEF3F7]"
-            >
-              <i class="fa-solid fa-search text-gray-500 text-sm"></i>
+            class="flex transition-all duration-300 items-center focus-within:w-[90%] w-60 space-x-3 py-1.5 px-3 rounded-[20px] bg-white border-[0.5px] border-[solid] border-black"
+          >
+            <i class="fa-solid fa-search text-gray-500 text-sm"></i>
+            @if(isJobPage()){
+              <input
+                (input)="onInputJob($event)"
+                type="text"
+                placeholder="Search for job"
+                class="w-full focus:outline-none text-sm"
+              />
+            } @else {
               <input
                 (focus)="goToSearchRoute()"
                 (input)="onInput($event)"
                 type="text"
-                placeholder="Search"
-                class="w-full bg-[#EEF3F7] focus:outline-none ml-2"
+                placeholder="Search for compnay or user"
+                class="w-full focus:outline-none text-sm"
               />
-            </div>
+            }
+          </div>
           </div>
 
           <!-- Right: chat -->
