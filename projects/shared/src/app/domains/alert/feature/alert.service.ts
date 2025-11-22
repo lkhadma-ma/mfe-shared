@@ -18,7 +18,7 @@ export class AlertService {
 
   // default icons
   private defaultIcons: Record<string, string> = {
-    info: 'M13 16h-1v-4h-1m1-4h.01M12 6v6',
+    info: 'M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z',
     success: 'M5 13l4 4L19 7',
     warning: 'M12 9v4m0 4h.01M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20z',
     error: 'M6 18L18 6M6 6l12 12'
