@@ -121,6 +121,7 @@ export class AlertService {
         alignItems: 'center',
         position: 'relative',
         fontSize,
+        width: '90%',
         transition: 'all 0.2s ease',
         backgroundColor: this.bgColor(alert.type),
         color: this.textColor(alert.type),
