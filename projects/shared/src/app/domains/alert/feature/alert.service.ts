@@ -60,15 +60,37 @@ export class AlertService {
   /** Create the root container in the DOM */
   private createContainer() {
     this.containerEl = document.createElement('div');
-    Object.assign(this.containerEl.style, {
-      position: 'fixed',
-      top: '1rem',
-      right: '1rem',
-      width: '300px',
-      zIndex: '9999',
-    });
+  
+    const isMobile = window.innerWidth < 768;
+  
+    if (isMobile) {
+      // Mobile → bottom center
+      Object.assign(this.containerEl.style, {
+        position: 'fixed',
+        bottom: '4rem',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: '100%',
+        minWidth: '350px',
+        zIndex: '9999',
+        display: 'flex',
+        flexDirection: 'column-reverse', // new alerts appear above old ones
+        alignItems: 'center',
+      });
+    } else {
+      // Web → top right
+      Object.assign(this.containerEl.style, {
+        position: 'fixed',
+        top: '3rem',
+        right: '1rem',
+        width: '300px',
+        zIndex: '9999',
+      });
+    }
+  
     document.body.appendChild(this.containerEl);
   }
+  
 
   /** Render alerts safely in the DOM */
   private render() {
